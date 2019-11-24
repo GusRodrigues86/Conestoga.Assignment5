@@ -9,8 +9,30 @@ Create a C# console application that creates and records information about a boo
 	- Provide the copyright year of the book:
 	- Provide the number of pages of the book:
 1. Display the details of an existing book:
+	- Provide a book title to search:
+	- Provide an author to search:
 1. Edit an existing book:
+	- Provide a book title to search:
+	- Provide an author to search:
 1. Exit the program:
+
+### Validation
+* All inputs must be validated.
+    * In case of an invalid input, the user is prompted to re-enter the value until a valid value has been entered.
+* "A" New book creation rules
+	* Search if the book already exists in the record.
+		* If a book has previously been created, the program displays "Book record already exists"
+	* Store book in the library.
+* "B" Book lookup rules
+	* Search if the book already exists in the record.
+		* No book found: "No book record exists".
+		* Book found: Displays the book details.
+* "C" Book lookup rules
+	* Search if the book already exists in the record.
+		* No book found: "No book record exists".
+		* Book found: 
+			* Displays the book details.
+			* Prompt the user to enter new values for each field. 
 
 ## Book Class Requirements
 Create a class that represents the Book using appropriate fields and methods.
