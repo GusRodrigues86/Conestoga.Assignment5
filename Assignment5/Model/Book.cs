@@ -83,6 +83,12 @@ namespace Assignment5.Model
         /// <returns>The string representing of the Book.</returns>
         public string Display() => this.ToString();
 
+        /// <summary>
+        /// To comply with object signature.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">On every call.</exception>
+        public void Edit() => throw new InvalidOperationException();
+
         /// <inheritdoc/>
         public override string ToString()
         {
