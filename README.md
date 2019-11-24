@@ -19,7 +19,7 @@ Create a class that represents the Book using appropriate fields and methods.
 1.	Number of pages - required, positive integer
 
 ## Menu Display
-A Create a new book
-A Display the details of an existing book
-A Edit an existing book
-A Exit the program
+A.	Create a new book
+A.	Display the details of an existing book
+A.	Edit an existing book
+A.	Exit the program
