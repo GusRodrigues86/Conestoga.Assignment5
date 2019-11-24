@@ -242,6 +242,29 @@ namespace TestsAssignment5.Model
                 );
         }
 
+        [Test]
+        public void Test_BookDisplayInformation()
+        {
+            // Assemble
+            string title = "1984";
+            List<string> authors = new List<string>
+            {
+                "George Orwell"
+            };
+            int copyrightRelease = 1949;
+            int numberOfPages = 328;
 
+            string expected = 
+             $"[Information About: {title}]\n" +
+             $"Authors: {authors[0].ToLower()}.\n" +
+             $"Released: {copyrightRelease}\n" +
+             $"Number of Pages: {numberOfPages}";
+
+            // Act
+            string actual = book.Display();
+
+            Assert.That(actual, Is.EqualTo(expected));
+
+        }
     }
 }

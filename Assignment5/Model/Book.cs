@@ -3,13 +3,13 @@
 * Revision History
 *      Gustavo Bonifacio Rodrigues, 2019.11.23: Created
 */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Assignment5.Model
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
     /// Book is immutable object Representing a book that was released before 2020 and after 1923.
     /// <para>It has a non-null and non-whitespaced Title.</para>
@@ -39,6 +39,12 @@ namespace Assignment5.Model
             this.NumberOfPages = numberOfPages;
             this.CheckRep();
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Book"/> class.
+        /// </summary>
+        /// <exception cref="NotSupportedException">Book cannot exist without information</exception>
+        private Book() => throw new NotSupportedException();
 
         /// <summary>
         /// Get the list of authors.
@@ -78,6 +84,22 @@ namespace Assignment5.Model
         {
             this.CheckRep();
             return this.NumberOfPages;
+        }
+
+        /// <summary>
+        /// The textual representation of the Book.
+        /// </summary>
+        /// <returns>The string representing of the Book.</returns>
+        public string Display() => this.ToString();
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return
+             $"[Information About: {this.Title}]\n" +
+             $"Authors: {this.StringOfAuthors()}\n" +
+             $"Released: {this.CopyrightYear}\n" +
+             $"Number of Pages: {this.NumberOfPages}";
         }
 
         /// <inheritdoc/>
@@ -168,5 +190,22 @@ namespace Assignment5.Model
             _ = (this.NumberOfPages >= 1) ? string.Empty : throw new ArgumentOutOfRangeException(nameof(this.NumberOfPages));
         }
 
+        private string StringOfAuthors()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < this.Authors.Count; i++)
+            {
+                if (i < (this.Authors.Count - 1))
+                {
+                    sb.Append(this.Authors[i] + ", ");
+                }
+                else
+                {
+                    sb.Append(this.Authors[i] + ".");
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 }
