@@ -11,10 +11,13 @@ using System.Text;
 namespace Assignment5.Model
 {
     /// <summary>
-    /// Book is immutable object Representing a book that was released before 2020 and after 1923.
+    /// Book is immutable object Representing a book that was released
+    /// before 2020 and after 1923.
     /// <para>It has a non-null and non-whitespaced Title.</para>
-    /// <para>It has a non-null List of non-null non-whitespaced Authors.</para>
-    /// <para>It must have been released before 2019, inclusive, but not before 1924 as well.</para>
+    /// <para>It has a non-null List of non-null non-whitespaced
+    /// Authors.</para>
+    /// <para>It must have been released before 2019, inclusive,
+    /// but not before 1924 as well.</para>
     /// <para>It must have at least one page.</para>
     /// </summary>
     public class Book
@@ -27,11 +30,15 @@ namespace Assignment5.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Book"/> class.
         /// </summary>
-        /// <param name="title">The book Title.</param>
-        /// <param name="authors">The book Authors.</param>
+        /// <param name="title">The book title.</param>
+        /// <param name="author">The book author.</param>
         /// <param name="copyrightYear">The year of release.</param>
         /// <param name="numberOfPages">The number of pages.</param>
-        public Book(string title, string author, int copyrightYear, int numberOfPages)
+        public Book(
+            string title,
+            string author,
+            int copyrightYear,
+            int numberOfPages)
         {
             this.Title = title.ToLower();
             this.Author = author.ToLower();
@@ -56,31 +63,19 @@ namespace Assignment5.Model
         /// Get the title of the Book.
         /// </summary>
         /// <returns>The title of the Book.</returns>
-        public string GetTitle()
-        {
-            this.CheckRep();
-            return this.Title;
-        }
+        public string GetTitle() => this.Title;
 
         /// <summary>
         /// Get the year that the Book was released.
         /// </summary>
         /// <returns>The year of the book release.</returns>
-        public int GetCopyrightYear()
-        {
-            this.CheckRep();
-            return this.CopyrightYear;
-        }
+        public int GetCopyrightYear() => this.CopyrightYear;
 
         /// <summary>
         /// Get the total Number of Pages.
         /// </summary>
         /// <returns>The total number of pages.</returns>
-        public int GetNumberOfPages()
-        {
-            this.CheckRep();
-            return this.NumberOfPages;
-        }
+        public int GetNumberOfPages() => this.NumberOfPages;
 
         /// <summary>
         /// The textual representation of the Book.
@@ -121,9 +116,12 @@ namespace Assignment5.Model
             return hashCode;
         }
 
-        /// <summary> This methods will check the class invariance & abstract function.
+        /// <summary>
+        /// This methods will check the class invariance &
+        /// abstract function.
         /// <para> AF(title) = (!null && !whiteSpace) && LowerCase</para>
-        /// <para> AF(authors) = (!null && !NotEmptyList) &&  Elements LowerCase.</para>
+        /// <para> AF(authors) = (!null && !NotEmptyList) &&
+        /// Elements LowerCase.</para>
         /// <para> AF(copyrightYear) <= 2019 && >= 1924 </para>
         /// <para> AF(numberOfPages) > 0</para>
         /// Invariance: All cases must be true.
@@ -143,10 +141,15 @@ namespace Assignment5.Model
             }
 
             // AF(copyrightYear)
-            _ = (this.CopyrightYear >= 1924 && this.CopyrightYear <= 2019) ? string.Empty : throw new ArgumentOutOfRangeException(nameof(this.CopyrightYear));
+            _ = (this.CopyrightYear >= 1924 &&
+                this.CopyrightYear <= 2019) ?
+                string.Empty : throw new
+                ArgumentOutOfRangeException(nameof(this.CopyrightYear));
 
             // AF(numberOfPages)
-            _ = (this.NumberOfPages >= 1) ? string.Empty : throw new ArgumentOutOfRangeException(nameof(this.NumberOfPages));
+            _ = (this.NumberOfPages >= 1) ?
+                string.Empty : throw new
+                ArgumentOutOfRangeException(nameof(this.NumberOfPages));
         }
     }
 }
