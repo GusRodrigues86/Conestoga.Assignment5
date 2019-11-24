@@ -3,12 +3,7 @@
 Create a C# console application that creates and records information about a book.
 
 ## Menu Display
-
 A. Create a new book:
-    - Provide the title of the book:
-	- Provide the author of the book:
-	- Provide the copyright year of the book:
-	- Provide the number of pages of the book:
 B. Display the details of an existing book:
 C. Edit an existing book:
 D. Exit the program:
