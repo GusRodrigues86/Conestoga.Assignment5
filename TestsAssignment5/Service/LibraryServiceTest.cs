@@ -45,7 +45,7 @@ namespace TestsAssignment5.Service
         public void AnEmptyLibraryWillAlwaysCountZero()
         {
             // Act
-            int actual = library.TotalOfBooks();
+            int actual = library.BookCounter();
             // Assert
             Assert.That(actual, Is.EqualTo(0));
         }
@@ -112,7 +112,7 @@ namespace TestsAssignment5.Service
             library.AddBook(book);
             // Assert
             Assert.That(library.BooksByAuthorCounter(author), Is.EqualTo(2));
-            Assert.That(library.TotalOfBooks(), Is.EqualTo(2));
+            Assert.That(library.BookCounter(), Is.EqualTo(2));
         }
 
         [Test]
@@ -166,12 +166,12 @@ namespace TestsAssignment5.Service
             library.AddBook(book);
             // Act
             library.AddBook(book);
-            int actual = library.TotalOfBooks();
+            int actual = library.BookCounter();
             // Assert
             Assert.That(actual, Is.EqualTo(2));
             // Act
             library.RemoveBook(book);
-            actual = library.TotalOfBooks();
+            actual = library.BookCounter();
             // Assert
             Assert.That(actual, Is.EqualTo(1));
         }
