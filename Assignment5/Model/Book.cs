@@ -20,7 +20,7 @@ namespace Assignment5.Model
     public class Book
     {
         private readonly string Title;
-        private readonly List<string> Authors;
+        private readonly string Author;
         private readonly int CopyrightYear;
         private readonly int NumberOfPages;
 
@@ -31,10 +31,10 @@ namespace Assignment5.Model
         /// <param name="authors">The book Authors.</param>
         /// <param name="copyrightYear">The year of release.</param>
         /// <param name="numberOfPages">The number of pages.</param>
-        public Book(string title, List<string> authors, int copyrightYear, int numberOfPages)
+        public Book(string title, string author, int copyrightYear, int numberOfPages)
         {
             this.Title = title.ToLower();
-            this.Authors = this.CheckAuthors(authors);
+            this.Author = author.ToLower();
             this.CopyrightYear = copyrightYear;
             this.NumberOfPages = numberOfPages;
             this.CheckRep();
@@ -47,14 +47,10 @@ namespace Assignment5.Model
         private Book() => throw new NotSupportedException();
 
         /// <summary>
-        /// Get the list of authors.
+        /// Get the author.
         /// </summary>
-        /// <returns>The list of authors.</returns>
-        public List<string> GetAuthors()
-        {
-            this.CheckRep();
-            return this.CheckAuthors(this.Authors);
-        }
+        /// <returns>The list of author.</returns>
+        public string GetAuthor() => this.Author;
 
         /// <summary>
         /// Get the title of the Book.
@@ -97,7 +93,7 @@ namespace Assignment5.Model
         {
             return
              $"[Information About: {this.Title}]\n" +
-             $"Authors: {this.StringOfAuthors()}\n" +
+             $"Author: {this.Author}.\n" +
              $"Released: {this.CopyrightYear}\n" +
              $"Number of Pages: {this.NumberOfPages}";
         }
@@ -105,25 +101,13 @@ namespace Assignment5.Model
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (obj != null)
-            {
-                if (obj is Book book)
-                {
-                    // EqualityComparer<List<string>>.Default.Equals(Authors, book.Authors) &&
-                    return (this.Authors.Except(book.GetAuthors()).ToList().Count == 0) &&
-                    this.Title == book.Title &&
-                    this.CopyrightYear == book.CopyrightYear &&
-                    this.NumberOfPages == book.NumberOfPages;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
+            _ = obj ?? throw new NullReferenceException();
+
+            return obj is Book book &&
+                   this.Title == book.Title &&
+                   this.Author == book.Author &&
+                   this.CopyrightYear == book.CopyrightYear &&
+                   this.NumberOfPages == book.NumberOfPages;
         }
 
         /// <inheritdoc/>
@@ -131,38 +115,10 @@ namespace Assignment5.Model
         {
             var hashCode = -956098;
             hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(this.Title);
-            hashCode = (hashCode * -1521134295) + EqualityComparer<List<string>>.Default.GetHashCode(this.Authors);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(this.Author);
             hashCode = (hashCode * -1521134295) + this.CopyrightYear.GetHashCode();
             hashCode = (hashCode * -1521134295) + this.NumberOfPages.GetHashCode();
             return hashCode;
-        }
-
-        /// <summary>
-        /// Will return a list with all authors lowercased. The supplied author list must be made of non-null or white spaced name.
-        /// </summary>
-        /// <param name="toCheck">The list of Authors</param>
-        /// <returns>A list of Authors with all names in lower case.</returns>
-        /// <exception cref="NullReferenceException">If provided list is Empty or null.</exception>
-        /// <exception cref="ArgumentNullException">If any element of the list is null or whitespaced.</exception>
-        private List<string> CheckAuthors(List<string> toCheck)
-        {
-            if (toCheck == null || toCheck.Count == 0)
-            {
-                throw new NullReferenceException();
-            }
-
-            List<string> tempAuthors = new List<string>();
-            toCheck.ForEach((author) =>
-            {
-                if (string.IsNullOrWhiteSpace(author))
-                {
-                    throw new ArgumentNullException(nameof(author));
-                }
-
-                tempAuthors.Add(author.ToLower());
-            });
-
-            return tempAuthors;
         }
 
         /// <summary> This methods will check the class invariance & abstract function.
@@ -181,31 +137,16 @@ namespace Assignment5.Model
             }
 
             // AF(authors)
-            this.CheckAuthors(this.Authors);
+            if (string.IsNullOrWhiteSpace(this.Author))
+            {
+                throw new ArgumentNullException(nameof(this.Author));
+            }
 
             // AF(copyrightYear)
             _ = (this.CopyrightYear >= 1924 && this.CopyrightYear <= 2019) ? string.Empty : throw new ArgumentOutOfRangeException(nameof(this.CopyrightYear));
 
             // AF(numberOfPages)
             _ = (this.NumberOfPages >= 1) ? string.Empty : throw new ArgumentOutOfRangeException(nameof(this.NumberOfPages));
-        }
-
-        private string StringOfAuthors()
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < this.Authors.Count; i++)
-            {
-                if (i < (this.Authors.Count - 1))
-                {
-                    sb.Append(this.Authors[i] + ", ");
-                }
-                else
-                {
-                    sb.Append(this.Authors[i] + ".");
-                }
-            }
-
-            return sb.ToString();
         }
     }
 }

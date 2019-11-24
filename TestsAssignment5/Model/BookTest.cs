@@ -26,13 +26,10 @@ namespace TestsAssignment5.Model
         public void Init()
         {
             string title = "1984";
-            List<string> authors = new List<string>
-            {
-                "George Orwell"
-            };
+            string author = "George Orwell";
             int copyrightRelease = 1949;
             int numberOfPages = 328;
-            book = new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
+            book = new Book(title: title, author: author, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
         }
 
         [Test]
@@ -40,24 +37,23 @@ namespace TestsAssignment5.Model
         {
             // Assemble
             string title = "1984";
-            List<string> authors = new List<string>();
-            authors.Add("George Orwell");
+            string author = "George Orwell";
             int copyrightRelease = 1949;
             int numberOfPages = 328;
-            book = new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
+            book = new Book(title: title, author: author, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
             // Act by changing everything
             // change title
             title = "Brave new World";
             // add author to list
-            authors.Add("Bob");
+            author = "Bob";
             // change release date
             copyrightRelease = 1984;
             // number of pages
             numberOfPages = 200;
-            Book secondBook = new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
+            Book secondBook = new Book(title: title, author: author, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
             // Assert
             Assert.That(book.GetTitle(), Is.Not.EqualTo(title));
-            Assert.That(book.GetAuthors(), Is.Not.EqualTo(authors));
+            Assert.That(book.GetAuthor(), Is.Not.EqualTo(author));
             Assert.That(book.GetCopyrightYear(), Is.Not.EqualTo(copyrightRelease));
             Assert.That(book.GetNumberOfPages(), Is.Not.EqualTo(numberOfPages));
             Assert.That(book, Is.Not.EqualTo(secondBook));
@@ -75,15 +71,12 @@ namespace TestsAssignment5.Model
             bool transitive;
             bool invalid;
             string title = "1984";
-            List<string> authors = new List<string>
-            {
-                "George Orwell"
-            };
+            string author = "George Orwell";
             int copyrightRelease = 1949;
             int numberOfPages = 328;
-            secondBook = new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
-            thirdBook = new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
-            invalidBook = new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: 1);
+            secondBook = new Book(title: title, author: author, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
+            thirdBook = new Book(title: title, author: author, copyrightYear: copyrightRelease, numberOfPages: numberOfPages);
+            invalidBook = new Book(title: title, author: author, copyrightYear: copyrightRelease, numberOfPages: 1);
             // Act
             reflexive = book.Equals(book);
             symmetric = (book.Equals(secondBook) && secondBook.Equals(book));
@@ -101,20 +94,15 @@ namespace TestsAssignment5.Model
         public void InvalidCopyRightYearTest()
         {
             string title = "1984";
-            List<string> authors = new List<string>
-            {
-                "George Orwell"
-            };
+            string authors = "George Orwell";
             int copyrightRelease = 1923;
             int numberOfPages = 328;
 
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
                 .With.Message.EqualTo("Specified argument was out of the range of valid values. (Parameter 'CopyrightYear')")
 
             );
-            ;
-
         }
 
         [Test]
@@ -122,15 +110,12 @@ namespace TestsAssignment5.Model
         {
             // Assemble
             string title = "1984";
-            List<string> authors = new List<string>
-            {
-                "George Orwell",
-            };
+            string authors = "George Orwell";
             int copyrightRelease = 1949;
             int numberOfPages = 0;
             // Act
             // Assert
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
                 );
         }
@@ -140,15 +125,12 @@ namespace TestsAssignment5.Model
         {
             // Assemble
             string title = "1984";
-            List<string> authors = new List<string>
-            {
-                "George Orwell",
-            };
+            string authors = "George Orwell";
             int copyrightRelease = 1949;
             int numberOfPages = -328;
             // Act
             // Assert
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
                 );
         }
@@ -160,56 +142,38 @@ namespace TestsAssignment5.Model
 
             // Assemble
             string title = "1984";
-            List<string> authors = new List<string>();
+            string authors = null;
             int copyrightRelease = 1949;
             int numberOfPages = 328;
             // Act
             // Assert
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<NullReferenceException>()
                 );
 
-            authors = null;
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
-                Throws.Exception.TypeOf<NullReferenceException>()
+            authors = string.Empty;
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+                Throws.Exception.TypeOf<ArgumentNullException>()
                 );
         }
 
         [Test]
-        public void Test_WhitespacedAuthorInAuthorListThrowException()
+        public void Test_WhitespacedAuthorInAuthorThrowException()
         {
             // Assemble
             string title = "1984";
-            List<string> authors = new List<string>
-            {
-                "George Orwell",
-                " "
-            };
+            string authors = " ";
             int copyrightRelease = 1949;
             int numberOfPages = 328;
 
             // Act
             // Assert
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<ArgumentNullException>()
                 );
+            authors = string.Empty;
 
-            authors = new List<string>
-            {
-                " ",
-                " "
-            };
-
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
-                Throws.Exception.TypeOf<ArgumentNullException>()
-                );
-
-            authors = new List<string>
-            {
-                string.Empty
-            };
-
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<ArgumentNullException>()
                 );
         }
@@ -220,24 +184,21 @@ namespace TestsAssignment5.Model
         {
             // Assemble
             string title = " ";
-            List<string> authors = new List<string>
-            {
-                "George Orwell"
-            };
+            string authors = "George Orwell";
             int copyrightRelease = 1949;
             int numberOfPages = 328;
 
             // Assert
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<ArgumentNullException>()
                 );
             title = string.Empty;
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<ArgumentNullException>()
                 );
 
             title = null;
-            Assert.That(() => new Book(title: title, authors: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
+            Assert.That(() => new Book(title: title, author: authors, copyrightYear: copyrightRelease, numberOfPages: numberOfPages),
                 Throws.Exception.TypeOf<NullReferenceException>()
                 );
         }
@@ -247,16 +208,13 @@ namespace TestsAssignment5.Model
         {
             // Assemble
             string title = "1984";
-            List<string> authors = new List<string>
-            {
-                "George Orwell"
-            };
+            string author = "George Orwell".ToLower();
             int copyrightRelease = 1949;
             int numberOfPages = 328;
 
-            string expected = 
+            string expected =
              $"[Information About: {title}]\n" +
-             $"Authors: {authors[0].ToLower()}.\n" +
+             $"Author: {author}.\n" +
              $"Released: {copyrightRelease}\n" +
              $"Number of Pages: {numberOfPages}";
 
