@@ -268,5 +268,17 @@ namespace TestsAssignment5.Helper
             // Assert
             Assert.That(expected, Is.EqualTo(actual));
         }
+
+        [Test]
+        public void MenuInvalidSelection()
+        {
+            // Assemble
+            string input = "g";
+            int expected = 0;
+            // Act
+            int actual = Parser.ParseInputToMenu(input);
+            // Assert
+            Assert.That(expected, Is.EqualTo(actual));
+        }
     }
 }

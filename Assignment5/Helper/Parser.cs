@@ -28,7 +28,6 @@ namespace Assignment5.Helper
             {
                 throw new ArgumentNullException(nameof(input));
             }
-
             return input.ToLower();
         }
 
