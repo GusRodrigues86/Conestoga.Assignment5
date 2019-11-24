@@ -7,29 +7,23 @@
 using Assignment5.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment5.Service
 {
     /// <summary>
     /// The Library Service will hold records by author and by title
     /// of all known books by the library.
+    /// LibraryService is Mutable.
     /// </summary>
     public class LibraryService
     {
-        public IDictionary<string, ISet<Book>> BooksByAuthor;
-        public IDictionary<string, ISet<Book>> BooksByTitle;
+        private IDictionary<string, ISet<Book>> BooksByAuthor;
 
         // rep invariant:
-        //    non null dictionaries
+        //    non null dictionary
         //
         // abstraction function:
-        //    The set of books in BooksByAuthor excluding the set
-        //    BooksByTitle is empty.
-        //    The set of books in BooksByTitle excluding the set
-        //    BooksByAuthor is empty.
+        //    The set of books in BooksByAuthor contains a set of Book that is non null.
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LibraryService"/> class.
@@ -37,28 +31,67 @@ namespace Assignment5.Service
         public LibraryService()
         {
             this.BooksByAuthor = new Dictionary<string, ISet<Book>>();
-            this.BooksByTitle = new Dictionary<string, ISet<Book>>();
             this.CheckRep();
         }
 
         /// <summary>
-        /// Searches for all books with that author.
+        /// Searches for all books.
         /// </summary>
-        /// <param name="author">The author to be searched.</param>
-        /// <returns>True if and only if there is a book with that author.</returns>
-        public bool SearchByAuthor(string author)
+        /// <param name="book">The book to be searched.</param>
+        /// <returns>True if and only if the book is in library.</returns>
+        public bool Search(Book book)
         {
-            return this.BooksByAuthor.Keys.Contains(author.ToLower());
+            if (this.SearchByAuthor(book.GetAuthor()))
+            {
+                if (this.BooksByAuthor[book.GetAuthor()].Contains(book))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
         }
 
         /// <summary>
-        /// Searches for all books with that title.
+        /// Will count all books in the library.
         /// </summary>
-        /// <param name="title">The title to be searched.</param>
-        /// <returns>True if and only if there is a book with that author.</returns>
-        public bool SearchByTitle(string title)
+        /// <returns>The total of books.</returns>
+        public int TotalOfBooks()
         {
-            return this.BooksByTitle.Keys.Contains(title.ToLower());
+            int counter = 0;
+            if (this.BooksByAuthor.Keys.Count != 0)
+            {
+                foreach (KeyValuePair<string, ISet<Book>> pair in this.BooksByAuthor)
+                {
+                    counter += this.BooksByAuthor[pair.Key].Count;
+                }
+
+                return counter;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Counts all books know by that author.
+        /// </summary>
+        /// <param name="author">The author of the books</param>
+        /// <returns>the total books know of that author</returns>
+        public int BooksByAuthorCounter(string author)
+        {
+            author = author.ToLower();
+            if (this.SearchByAuthor(author))
+            {
+                ISet<Book> tempSet = new HashSet<Book>();
+                this.BooksByAuthor.TryGetValue(author, out tempSet);
+                return tempSet.Count;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         /// <summary>
@@ -68,26 +101,73 @@ namespace Assignment5.Service
         /// <returns>True if and only if the add was successfull.</returns>
         public bool AddBook(Book book)
         {
-            this.BooksByAuthor.Add(book.GetAuthor(), new HashSet<Book>() { book });
-            this.BooksByTitle.Add(book.GetTitle(), new HashSet<Book>() { book });
-            return true;
+            if (this.SearchByAuthor(book.GetAuthor()))
+            {
+                if (this.BooksByAuthor[book.GetAuthor()].Contains(book))
+                {
+                    return false;
+                }
+                else
+                {
+                    this.BooksByAuthor[book.GetAuthor()].Add(book);
+                    this.CheckRep();
+                    return true;
+                }
+
+                // Book already exists.
+                return false;
+            }
+            else
+            {
+                this.BooksByAuthor.Add(book.GetAuthor(), new HashSet<Book>() { book });
+                this.CheckRep();
+                return true;
+            }
+
+        }
+
+        /// <summary>
+        /// Remove a book from the library.
+        /// </summary>
+        /// <param name="book">The book to be removed.</param>
+        /// <returns>true if and only if the book was on the library.</returns>
+        public bool RemoveBook(Book book)
+        {
+            if (this.SearchByAuthor(book.GetAuthor()))
+            {
+                if (this.BooksByAuthor[book.GetAuthor()].Contains(book))
+                {
+                    this.BooksByAuthor[book.GetAuthor()].Remove(book);
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Searches for all books with that author.
+        /// </summary>
+        /// <param name="author">The author to be searched.</param>
+        /// <returns>True if and only if there is a book with that author.</returns>
+        private bool SearchByAuthor(string author)
+        {
+            return this.BooksByAuthor.Keys.Contains(author.ToLower());
         }
 
         /// <summary>
         /// abstraction function:
-        /// <para>The set of books in BooksByAuthor excluding the set
-        /// BooksByTitle is empty.</para>
-        /// <para>The set of books in BooksByTitle excluding the set
-        /// BooksByAuthor is empty.</para>
+        /// <para>The set of books in BooksByAuthor contains a set of Book that is non null.</para>
         /// </summary>
         private void CheckRep()
         {
             _ = this.BooksByAuthor ?? throw new NullReferenceException(nameof(this.BooksByAuthor));
-            _ = this.BooksByTitle ?? throw new NullReferenceException(nameof(this.BooksByTitle));
-            _ = (this.BooksByAuthor.Values.ToHashSet().Except(this.BooksByTitle.Values.ToHashSet()).Count() == 0) ? string.Empty :
-                throw new ArgumentOutOfRangeException();
-            _ = (this.BooksByTitle.Values.ToHashSet().Except(this.BooksByAuthor.Values.ToHashSet()).Count() == 0) ? string.Empty :
-                throw new ArgumentOutOfRangeException();
+            foreach (var pair in this.BooksByAuthor)
+            {
+                _ = pair.Value ?? throw new ArgumentNullException();
+            }
         }
     }
 }
