@@ -55,15 +55,19 @@ namespace Assignment5.View
         {
             WriteLine(AskForTitle);
             WriteLine();
+
             // user input answer
             WriteLine(AskForAuthor);
             WriteLine();
+
             // user inputs answer
             WriteLine(AskForCopyright);
             WriteLine();
+
             // user inputs answer
             WriteLine(AskForNumberOfPages);
             WriteLine();
+
             // user inputs Answer
 
             // try to create book
@@ -77,6 +81,7 @@ namespace Assignment5.View
         public static void SearchBook(LibraryService library)
         {
             WriteLine(SearchMethods);
+
             // user input search method
             // select the right prompt
         }
@@ -88,9 +93,11 @@ namespace Assignment5.View
         public static void SearchByAuthor(LibraryService library)
         {
             WriteLine(AskForAuthorNameSearch);
+
             // user input name
             // search
             WriteLine(BookNotFound);
+
             // book found
         }
 
@@ -101,9 +108,11 @@ namespace Assignment5.View
         public static void SearchByTitle(LibraryService library)
         {
             WriteLine(AskForBookTitleSearch);
+
             // user input title
             // search
             WriteLine(BookNotFound);
+
             // book found
         }
 
