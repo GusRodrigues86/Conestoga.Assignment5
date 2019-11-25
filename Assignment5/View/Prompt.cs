@@ -3,13 +3,6 @@
  * Revision History
  *      Gustavo Bonifacio Rodrigues, 2019.11.23: Created
  */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Assignment5.View
 {
     /// <summary>
@@ -93,6 +86,5 @@ namespace Assignment5.View
         /// </summary>
         public static readonly string StatisticsBooks =
             "Books: ";
-
     }
 }
