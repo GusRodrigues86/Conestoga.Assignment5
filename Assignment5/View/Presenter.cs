@@ -35,7 +35,7 @@ namespace Assignment5.View
         public static void Statistics(LibraryService library)
         {
             WriteLine(StatisticsMessage);
-            WriteLine(StatisticsBooks + $" {library.BookCounter()}");
+            WriteLine("\t" + StatisticsBooks + $" {library.BookCounter()}");
         }
 
         /// <summary>
@@ -54,12 +54,16 @@ namespace Assignment5.View
         public static void CreateBook(LibraryService library)
         {
             WriteLine(AskForTitle);
+            WriteLine();
             // user input answer
             WriteLine(AskForAuthor);
+            WriteLine();
             // user inputs answer
             WriteLine(AskForCopyright);
+            WriteLine();
             // user inputs answer
             WriteLine(AskForNumberOfPages);
+            WriteLine();
             // user inputs Answer
 
             // try to create book

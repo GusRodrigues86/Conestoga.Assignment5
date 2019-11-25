@@ -45,8 +45,8 @@ namespace Assignment5.View
         /// Search options.
         /// </summary>
         public static readonly string SearchMethods =
-            "A. By the title of the book" +
-            "B. By the author of the book";
+            "A. By the title of the book\n" +
+            "B. By the author of the book\n";
 
         /// <summary>
         /// Ask for user input the book title to search.
@@ -76,11 +76,15 @@ namespace Assignment5.View
         /// The Main Menu.
         /// </summary>
         public static readonly string MainMenu =
+            "Choose one of the Following\n" +
             "A. Create a new book\n" +
             "B. Display the details of an existing book\n" +
             "C. Edit an existing book:\n" +
             "D. Exit the program:";
 
+        /// <summary>
+        /// General statistics header.
+        /// </summary>
         public static readonly string StatisticsMessage =
             "Hour library has a total of: ";
 
