@@ -54,6 +54,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\LibraryService.cs" />
+    <Compile Include="View\Presenter.cs" />
     <Compile Include="View\Prompt.cs" />
   </ItemGroup>
   <ItemGroup>

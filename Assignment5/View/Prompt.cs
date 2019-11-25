@@ -36,15 +36,22 @@ namespace Assignment5.View
             "Please, provide the number of pages of the book:";
 
         /// <summary>
+        /// Search options.
+        /// </summary>
+        public static readonly string SearchMethods =
+            "A. By the title of the book" +
+            "B. By the author of the book";
+
+        /// <summary>
         /// Ask for user input the book title to search.
         /// </summary>
-        public static readonly string AskForBookTitle =
+        public static readonly string AskForBookTitleSearch =
             "Please, provide a book title to search:";
 
         /// <summary>
         /// Ask for user input the author name to search.
         /// </summary>
-        public static readonly string AskForAuthorName =
+        public static readonly string AskForAuthorNameSearch =
             "Please, provide an author to search:";
 
         /// <summary>
@@ -56,7 +63,7 @@ namespace Assignment5.View
         /// <summary>
         /// Tells that no book was found on the collection.
         /// </summary>
-        public static readonly string NoBookFound =
+        public static readonly string BookNotFound =
             "No book record exists";
 
         /// <summary>
@@ -67,6 +74,5 @@ namespace Assignment5.View
             "B. Display the details of an existing book" +
             "C. Edit an existing book:" +
             "D. Exit the program:";
-
     }
 }
