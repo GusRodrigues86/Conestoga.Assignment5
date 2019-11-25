@@ -1,22 +1,48 @@
-﻿using System;
+﻿/* Assignment 5
+ * 
+ * Revision History
+ *      Gustavo Bonifacio Rodrigues, 2019.11.23: Created
+ */
+
+using System;
 using System.Collections.Generic;
 using static System.Console;
 using static Assignment5.View.Prompt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Assignment5.Service;
 
 namespace Assignment5.View
 {
     /// <summary>
     /// Writes in the Console according to the requirements.
     /// </summary>
-    static class Presenter
+    public static class Presenter
     {
+        /// <summary>
+        /// Welcome message after loading.
+        /// </summary>
+        /// <param name="library">The library service.</param>
+        public static void Welcome(LibraryService library)
+        {
+            WriteLine("Welcome\n");
+            Statistics(library);
+            Home(library);
+        }
+
+        /// <summary>
+        /// Show statistics
+        /// </summary>
+        /// <param name="library">The library service.</param>
+        public static void Statistics(LibraryService library)
+        {
+            WriteLine(StatisticsMessage);
+            WriteLine(StatisticsBooks + $" {library.BookCounter()}");
+        }
+
         /// <summary>
         /// Write the main menu options.
         /// </summary>
-        public static void Home()
+        /// <param name="library">The library service.</param>
+        public static void Home(LibraryService library)
         {
             WriteLine(MainMenu);
         }
@@ -24,7 +50,8 @@ namespace Assignment5.View
         /// <summary>
         /// Calls the book creation.
         /// </summary>
-        public static void CreateBook()
+        /// <param name="library">The library service.</param>
+        public static void CreateBook(LibraryService library)
         {
             WriteLine(AskForTitle);
             // user input answer
@@ -42,7 +69,8 @@ namespace Assignment5.View
         /// <summary>
         /// How user whants to search for a book.
         /// </summary>
-        public static void SearchBook()
+        /// <param name="library">The library service.</param>
+        public static void SearchBook(LibraryService library)
         {
             WriteLine(SearchMethods);
             // user input search method
@@ -50,9 +78,10 @@ namespace Assignment5.View
         }
 
         /// <summary>
-        /// Search by Author Name
+        /// Search by Author Name.
         /// </summary>
-        public static void SearchByAuthor()
+        /// <param name="library">The library service.</param>
+        public static void SearchByAuthor(LibraryService library)
         {
             WriteLine(AskForAuthorNameSearch);
             // user input name
@@ -62,9 +91,10 @@ namespace Assignment5.View
         }
 
         /// <summary>
-        /// Search by Author Name
+        /// Search by Author Name.
         /// </summary>
-        public static void SearchByTitle()
+        /// <param name="library">The library service.</param>
+        public static void SearchByTitle(LibraryService library)
         {
             WriteLine(AskForBookTitleSearch);
             // user input title
@@ -74,12 +104,13 @@ namespace Assignment5.View
         }
 
         /// <summary>
-        /// Edit an Book
+        /// Edit an Book.
         /// </summary>
-        public static void EditAnBook()
+        /// <param name="library">The library service.</param>
+        public static void EditAnBook(LibraryService library)
         {
             WriteLine("First, lets find the book...");
-            SearchBook();
+            SearchBook(library);
         }
     }
 }

@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Assignment 5
+ * 
+ * Revision History
+ *      Gustavo Bonifacio Rodrigues, 2019.11.23: Created
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +15,7 @@ namespace Assignment5.View
     /// <summary>
     /// All possible responses for the user.
     /// </summary>
-    public static class Prompt
+    internal static class Prompt
     {
         /// <summary>
         /// Ask for user input the book title.
@@ -70,9 +76,19 @@ namespace Assignment5.View
         /// The Main Menu.
         /// </summary>
         public static readonly string MainMenu =
-            "A. Create a new book" +
-            "B. Display the details of an existing book" +
-            "C. Edit an existing book:" +
+            "A. Create a new book\n" +
+            "B. Display the details of an existing book\n" +
+            "C. Edit an existing book:\n" +
             "D. Exit the program:";
+
+        public static readonly string StatisticsMessage =
+            "Hour library has a total of: ";
+
+        /// <summary>
+        /// Basic statistics.
+        /// </summary>
+        public static readonly string StatisticsBooks =
+            "Books: ";
+
     }
 }
