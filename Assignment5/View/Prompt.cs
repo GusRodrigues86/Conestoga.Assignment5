@@ -26,7 +26,7 @@ namespace Assignment5.View
         /// Ask for user input the book copyright year of the book.
         /// </summary>
         public static readonly string AskForCopyright =
-            "rovide the copyright year of the book:";
+            "Please provide the copyright year of the book:";
 
         /// <summary>
         /// Ask for user input the book number of Pages.
@@ -39,7 +39,8 @@ namespace Assignment5.View
         /// </summary>
         public static readonly string SearchMethods =
             "A. By the title of the book\n" +
-            "B. By the author of the book\n";
+            "B. By the author of the book\n" +
+            "C. Return to the menu";
 
         /// <summary>
         /// Ask for user input the book title to search.

@@ -28,6 +28,7 @@ namespace Assignment5.Helper
             {
                 throw new ArgumentNullException(nameof(input));
             }
+
             return input.ToLower();
         }
 
@@ -78,6 +79,25 @@ namespace Assignment5.Helper
             else if (input.Equals("4") || input.Equals("exit") || input.Equals("bye") || input.Equals("adios") || input.StartsWith("4") || input.StartsWith("four") || input.StartsWith("exit") || input.StartsWith("d-") || input.Equals("d"))
             {
                 return 4;
+            }
+
+            return 0;
+        }
+
+        public static int ParseInputToSearch(string input)
+        {
+            // first item
+            if (input.Equals("1") || input.Equals("a") || input.StartsWith("1") || input.StartsWith("create") || input.StartsWith("title") || input.StartsWith("a-"))
+            {
+                return 1;
+            }
+            else if (input.Equals("2") || input.Equals("b") || input.StartsWith("2") || input.StartsWith("existing") || input.StartsWith("author") || input.StartsWith("b-"))
+            {
+                return 2;
+            }
+            else if (input.Equals("3") || input.Equals("return") || input.Equals("previous") || input.Equals("back"))
+            {
+                return 3;
             }
 
             return 0;

@@ -8,7 +8,10 @@ using System;
 using System.Collections.Generic;
 using static System.Console;
 using static Assignment5.View.Prompt;
+using static Assignment5.Service.BookUseCase;
 using Assignment5.Service;
+using Assignment5.Model;
+using Assignment5.Helper;
 
 namespace Assignment5.View
 {
@@ -24,7 +27,6 @@ namespace Assignment5.View
         public static void Welcome(LibraryService library)
         {
             WriteLine("Welcome\n");
-            Statistics(library);
             Home(library);
         }
 
@@ -44,7 +46,26 @@ namespace Assignment5.View
         /// <param name="library">The library service.</param>
         public static void Home(LibraryService library)
         {
+            int selection;
+            Statistics(library);
             WriteLine(MainMenu);
+            selection = MenuUseCase.MainMenu(ReadLine());
+
+            switch (selection)
+            {
+                case 1:
+                    CreateBook(library);
+                    break;
+                case 2:
+                    SearchBook(library);
+                    break;
+                case 4:
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Home(library);
+                    break;
+            }
         }
 
         /// <summary>
@@ -53,25 +74,58 @@ namespace Assignment5.View
         /// <param name="library">The library service.</param>
         public static void CreateBook(LibraryService library)
         {
+            Clear();
+            string title;
+            string author;
+            int copyrightYear;
+            int numberOfPages;
+            Book book;
+
             WriteLine(AskForTitle);
+            title = CreateTitle(ReadLine());
             WriteLine();
 
             // user input answer
             WriteLine(AskForAuthor);
+            author = CreateAuthor(ReadLine());
             WriteLine();
 
             // user inputs answer
             WriteLine(AskForCopyright);
+            copyrightYear = CreateCopyrightYear(ReadLine());
             WriteLine();
 
             // user inputs answer
             WriteLine(AskForNumberOfPages);
+            numberOfPages = CreateNumberOfPages(ReadLine());
             WriteLine();
 
-            // user inputs Answer
-
             // try to create book
-            // try to store book
+            try
+            {
+                book = new Book(title: title, author: author, copyrightYear: copyrightYear, numberOfPages: numberOfPages);
+
+                // try to store book
+                if (!library.AddBook(book))
+                {
+                    throw new InvalidOperationException();
+                }
+                WriteLine($"Saved \"{book.GetTitle()}\" successfully:");
+            }
+            catch (InvalidOperationException)
+            {
+                Write("Unable to save the book in our library.\n" +
+                    "This mean that this books is already in the library.");
+                Home(library);
+            }
+            catch (Exception)
+            {
+                WriteLine("I'm sorry Dave, I'm afraid that I can't do that...");
+                WriteLine("Let's try again to create this book.");
+                CreateBook(library);
+            }
+
+            Home(library);
         }
 
         /// <summary>
@@ -80,10 +134,28 @@ namespace Assignment5.View
         /// <param name="library">The library service.</param>
         public static void SearchBook(LibraryService library)
         {
+            Clear();
+            int selection;
             WriteLine(SearchMethods);
-
-            // user input search method
-            // select the right prompt
+            selection = MenuUseCase.Search(ReadLine());
+            switch (selection)
+            {
+                case 1:
+                    SearchByTitle(library);
+                    break;
+                case 2:
+                    SearchByAuthor(library);
+                    break;
+                case 3:
+                    Clear();
+                    WriteLine("Returning to the main menu");
+                    Home(library);
+                    break;
+                default:
+                    WriteLine("Try again, please.");
+                    SearchBook(library);
+                    break;
+            }
         }
 
         /// <summary>
@@ -92,13 +164,27 @@ namespace Assignment5.View
         /// <param name="library">The library service.</param>
         public static void SearchByAuthor(LibraryService library)
         {
+            string author;
+            Book book;
             WriteLine(AskForAuthorNameSearch);
+            author = CreateAuthor(ReadLine());
+            try
+            {
+                book = library.SearchByAuthor(author);
+                Clear();
+                WriteLine(book);
+                WriteLine();
+            }
+            catch (KeyNotFoundException)
+            {
+                Clear();
+                WriteLine(BookNotFound);
+                Write("Press any key to go back to the search menu.");
+                ReadKey();
+                SearchBook(library);
+            }
 
-            // user input name
-            // search
-            WriteLine(BookNotFound);
-
-            // book found
+            Home(library);
         }
 
         /// <summary>
@@ -107,11 +193,27 @@ namespace Assignment5.View
         /// <param name="library">The library service.</param>
         public static void SearchByTitle(LibraryService library)
         {
+            string title;
+            Book book;
             WriteLine(AskForBookTitleSearch);
+            title = CreateTitle(ReadLine());
+            try
+            {
+                book = library.SearchByTitle(title);
+                Clear();
+                WriteLine(book);
+                WriteLine();
+            }
+            catch (KeyNotFoundException)
+            {
+                Clear();
+                WriteLine(BookNotFound);
+                Write("Press any key to go back to the search menu.");
+                ReadKey();
+                SearchBook(library);
+            }
 
-            // user input title
-            // search
-            WriteLine(BookNotFound);
+            Home(library);
 
             // book found
         }

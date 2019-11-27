@@ -146,7 +146,60 @@ namespace Assignment5.Model
         /// </summary>
         /// <param name="author">The author to be searched.</param>
         /// <returns>True if and only if there is a book with that author.</returns>
-        private bool SearchByAuthor(string author) => this.BooksByAuthor.Keys.Contains(author.ToLower());
+        public bool SearchByAuthor(string author) => 
+            this.BooksByAuthor.Keys.Contains(author.ToLower());
+
+        public bool SearchByTitle(string title)
+        {
+            foreach (var author in BooksByAuthor)
+            {
+                foreach (var book in author.Value)
+                {
+                    if (book.GetTitle().Equals(title))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
+        public Book GetByTitle(string title)
+        {
+            foreach (var author in BooksByAuthor)
+            {
+                foreach (var book in author.Value)
+                {
+                    if (book.GetTitle().Equals(title))
+                    {
+                        return book;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public Book GetByAuthor(string author)
+        {
+            foreach (var books in BooksByAuthor)
+            {
+                foreach (var book in books.Value)
+                {
+                    if (book.GetAuthor().Equals(author))
+                    {
+                        return book;
+                    }
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// abstraction function:

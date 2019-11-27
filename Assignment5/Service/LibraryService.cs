@@ -76,5 +76,41 @@ namespace Assignment5.Service
         {
             _ = this.Library ?? throw new NullReferenceException(nameof(this.Library));
         }
+
+        /// <summary>
+        /// Search and retrieve a book by it's title.
+        /// </summary>
+        /// <param name="title">The title to search.</param>
+        /// <returns>A book if and only if the books is in library.
+        /// </returns>
+        /// <exception cref="KeyNotFoundException">If no book is found.
+        /// </exception>
+        public Book SearchByTitle(string title)
+        {
+            if (this.Library.SearchByTitle(title))
+            {
+                return this.Library.GetByTitle(title);
+            }
+
+            throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Search and retrieve a book by it's author.
+        /// </summary>
+        /// <param name="author">The author to search.</param>
+        /// <returns>A book if and only if the books is in library.
+        /// </returns>
+        /// <exception cref="KeyNotFoundException">If no book is found.
+        /// </exception>
+        public Book SearchByAuthor(string author)
+        {
+            if (this.Library.SearchByAuthor(author))
+            {
+                return this.Library.GetByAuthor(author);
+            }
+
+            throw new KeyNotFoundException();
+        }
     }
 }

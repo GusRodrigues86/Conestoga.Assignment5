@@ -32,6 +32,7 @@ namespace Assignment5
             Thread.Sleep(2000);
             Console.Clear();
             Welcome(library);
+            /*
             Console.WriteLine();
             CreateBook(library);
             Console.WriteLine();
@@ -42,7 +43,7 @@ namespace Assignment5
             SearchByTitle(library);
             Console.WriteLine();
             EditAnBook(library);
-
+            */
         }
     }
 }
